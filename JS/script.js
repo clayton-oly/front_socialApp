@@ -1,15 +1,15 @@
-// URL da sua API
-const apiBase = "https://localhost:7117";
+// URL da sua API local
+// const apiBase = "https://localhost:7117";
 
-// Seleciona o elemento da lista
-const lista = document.getElementById('lista');
+// URL da sua API
+const apiBase = "https://api-socialapp-l0da.onrender.com";
 
 // Função para buscar dados da API
 async function carregarDadosUsuario() {
   try {
     const endpoint = "/api/usuario";
-    const response = await fetch(`${apiBase}${endpoint}`);     // Faz a requisição
-    const dados = await response.json();       // Converte para JSON
+    const response = await fetch(`${apiBase}${endpoint}`);
+    const dados = await response.json();
     console.log(dados);
 
     const tabela = document.getElementById('tabelaUsuario');
@@ -17,25 +17,21 @@ async function carregarDadosUsuario() {
     dados.forEach(item => {
       const tr = document.createElement('tr');
 
-      // Nome
       const tdNome = document.createElement('td');
       tdNome.textContent = item.nome;
       tr.appendChild(tdNome);
 
-      // E-mail
       const tdEmail = document.createElement('td');
       tdEmail.textContent = item.email;
       tr.appendChild(tdEmail);
 
-      // Foto
       const tdFoto = document.createElement('td');
       const img = document.createElement('img');
       img.src = item.foto;
-      img.width = 50;  // tamanho opcional
+      img.width = 150;
       tdFoto.appendChild(img);
       tr.appendChild(tdFoto);
 
-      // Adiciona a linha na tabela
       tabela.appendChild(tr);
     });
 
@@ -47,8 +43,8 @@ async function carregarDadosUsuario() {
 async function carregarDadosTema() {
   try {
     const endpoint = "/api/tema";
-    const response = await fetch(`${apiBase}${endpoint}`);     // Faz a requisição
-    const dados = await response.json();       // Converte para JSON
+    const response = await fetch(`${apiBase}${endpoint}`);
+    const dados = await response.json();
     console.log(dados);
 
     const tabela = document.getElementById('tabelaTema');
@@ -56,12 +52,10 @@ async function carregarDadosTema() {
     dados.forEach(item => {
       const tr = document.createElement('tr');
 
-      // Descricao
       const tdDescricao = document.createElement('td');
       tdDescricao.textContent = item.descricao;
       tr.appendChild(tdDescricao);
 
-      // Adiciona a linha na tabela
       tabela.appendChild(tr);
     });
 
@@ -73,8 +67,8 @@ async function carregarDadosTema() {
 async function carregarDadosPostagem() {
   try {
     const endpoint = "/api/postagem";
-    const response = await fetch(`${apiBase}${endpoint}`);     // Faz a requisição
-    const dados = await response.json();       // Converte para JSON
+    const response = await fetch(`${apiBase}${endpoint}`);
+    const dados = await response.json();
     console.log(dados);
 
     const tabela = document.getElementById('tabelaPostagem');
@@ -82,22 +76,29 @@ async function carregarDadosPostagem() {
     dados.forEach(item => {
       const tr = document.createElement('tr');
 
-      // Titulo
+      const tdFoto = document.createElement('td');
+      const img = document.createElement('img');
+      img.src = item.usuario.foto;
+      img.width = 150;
+      tdFoto.appendChild(img);
+      tr.appendChild(tdFoto);
+
+      const tdNome = document.createElement('td');
+      tdNome.textContent = item.usuario.nome;
+      tr.appendChild(tdNome);
+
       const tdTitulo = document.createElement('td');
       tdTitulo.textContent = item.titulo;
       tr.appendChild(tdTitulo);
 
-      //Texto
       const tdTexto = document.createElement('td');
       tdTexto.textContent = item.texto;
       tr.appendChild(tdTexto);
 
-      //Data
       const tdData = document.createElement('td');
       tdData.textContent = item.data;
       tr.appendChild(tdData);
 
-      // Adiciona a linha na tabela
       tabela.appendChild(tr);
     });
 
@@ -106,9 +107,8 @@ async function carregarDadosPostagem() {
   }
 }
 
+if(document.getElementById('tabelaUsuario') != null) carregarDadosUsuario();
 
-carregarDadosUsuario();
+if(document.getElementById('tabelaPostagem') != null)carregarDadosPostagem();
 
-carregarDadosPostagem();
-
-carregarDadosTema();
+if(document.getElementById('tabelaTema') != null) carregarDadosTema();
